@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<mule xmlns:ee="http://www.mulesoft.org/schema/mule/ee/core" xmlns:http="http://www.mulesoft.org/schema/mule/http"
+	xmlns="http://www.mulesoft.org/schema/mule/core"
+	xmlns:doc="http://www.mulesoft.org/schema/mule/documentation" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.mulesoft.org/schema/mule/core http://www.mulesoft.org/schema/mule/core/current/mule.xsd
+http://www.mulesoft.org/schema/mule/http http://www.mulesoft.org/schema/mule/http/current/mule-http.xsd
+http://www.mulesoft.org/schema/mule/ee/core http://www.mulesoft.org/schema/mule/ee/core/current/mule-ee.xsd">
+
+	<sub-flow name="wf_getCustomerCreditScore" doc:id="983f8c35-9616-4ce5-a920-3465aa9c44f4" >
+		<http:request method="GET" doc:name="Request to Credit System API to Fetch Credit Score" doc:id="04d0e1c7-f104-4750-b65a-65df0b409db1" config-ref="HTTP_Request_configuration_for_Credit_System_API" path="${destination.creditScore.path}/{ssn}">
+			<http:uri-params ><![CDATA[#[output application/java
+---
+{
+	"ssn" : vars.ssn
+}]]]></http:uri-params>
+		</http:request>
+		<choice doc:name="credit report exists ?" doc:id="fa9ad4c1-366c-4140-946d-ab783fc29e14" >
+			<when expression="#[not isEmpty(payload)]" >
+				<ee:transform doc:name="set decision" doc:id="e27be314-0fc2-405e-8564-69ba06da5763" >
+					<ee:message >
+					</ee:message>
+					<ee:variables >
+						<ee:set-variable resource="transformations\getCustomerLoanApprovalDecision.dwl" variableName="decision" />
+					</ee:variables>
+				</ee:transform>
+				<ee:transform doc:name="set json response" doc:id="c11dd7e4-22a0-4ebc-8f07-1fec7b05c109" >
+					<ee:message >
+						<ee:set-payload resource="transformations\setSuccessResponse.dwl" />
+					</ee:message>
+				</ee:transform>
+			</when>
+			<otherwise >
+				<ee:transform doc:name="set error response" doc:id="71a81ab0-0f6b-4e34-ac3b-6ede0f5e0f0c" >
+					<ee:message >
+						<ee:set-payload ><![CDATA[%dw 2.0
+output application/json
+---
+{
+	"message" : "No data available",
+	"statusCode" : 404
+}]]></ee:set-payload>
+					</ee:message>
+					<ee:variables >
+						<ee:set-variable variableName="httpStatus" ><![CDATA[404]]></ee:set-variable>
+					</ee:variables>
+				</ee:transform>
+			</otherwise>
+		</choice>
+	</sub-flow>
+</mule>

@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<mule xmlns:api-gateway="http://www.mulesoft.org/schema/mule/api-gateway"
+	xmlns:http="http://www.mulesoft.org/schema/mule/http" xmlns="http://www.mulesoft.org/schema/mule/core"
+	xmlns:doc="http://www.mulesoft.org/schema/mule/documentation"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="
+http://www.mulesoft.org/schema/mule/http http://www.mulesoft.org/schema/mule/http/current/mule-http.xsd http://www.mulesoft.org/schema/mule/core http://www.mulesoft.org/schema/mule/core/current/mule.xsd
+http://www.mulesoft.org/schema/mule/api-gateway http://www.mulesoft.org/schema/mule/api-gateway/current/mule-api-gateway.xsd">
+	
+		<http:request-config name="HTTP_Request_configuration_for_Credit_System_API" doc:name="HTTP Request configuration" doc:id="7a45bece-5eaa-4bd2-bdb5-a67a87222642" basePath="${destination.basePath}" >
+		<http:request-connection host="${destination.host}" port="${destination.port}" />
+	</http:request-config>
+	<api-gateway:autodiscovery apiId="${api.id}" doc:name="API Autodiscovery" doc:id="3c04c314-d3af-4790-9b59-db73e5741639" flowRef="customer-credit-process-api-main" />
+	<configuration-properties doc:name="Configuration properties" doc:id="49ebf654-a0ec-495f-85f7-f2b286dbfe53" file="configs/config-${env}.yaml" />
+	
+	
+</mule>
