@@ -1,0 +1,22 @@
+{
+  "customer" : {
+  "firstName" : "Satish",
+  "lastName" : "Garimella",
+  "ssn" : "123456789",
+  "address" : {
+    "addressLine1" : "",
+    "addressLine2" : "",
+    "aptNo" : "",
+    "city" : "Grapevine",
+    "state" : "TX",
+    "country" : "US"
+  }
+  },
+  "loanDetails" : {
+    "amountRequested" : 250000,
+    "currency" : "USD",
+    "apr" : 3.8,
+    "dateApplied" : "2019-02-28T16:41:41.090Z",
+    "source" : "website"
+  }
+}

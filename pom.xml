@@ -2,12 +2,12 @@
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
 	<modelVersion>4.0.0</modelVersion>
 
-	<groupId>com.credit</groupId>
-	<artifactId>customer-credit-process-api</artifactId>
-    <version>1.0.0</version>
+	<groupId>com.mycompany</groupId>
+	<artifactId>credit-process-api</artifactId>
+    <version>1.0.0-SNAPSHOT</version>
     <packaging>mule-application</packaging>
 
-	<name>customer-credit-process-api</name>
+	<name>credit-process-api</name>
 
     <properties>
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>

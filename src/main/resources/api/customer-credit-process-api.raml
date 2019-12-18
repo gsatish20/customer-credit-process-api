@@ -1,22 +1,24 @@
 #%RAML 1.0
-baseUri: https://anypoint.mulesoft.com/mocking/api/v1/links/80dabd9e-741a-409f-8828-c2538ca0612a/ # 
+baseUri: https://anypoint.mulesoft.com/mocking/api/v1/links/deefa088-19db-47cb-8c30-854cb82660c0/ # 
 title: Customer Credit Process API
 
-uses: 
-  creditLibrary: dataTypes/credit-report-library.raml
-/customer:
-  /creditScore:
-    /{ssn}:
-      uriParameters:
-        ssn:
-          maxLength: 9
-          minLength: 9
-      get:
-        description: get customer credit score based on ssn 
-        responses:
-          200:
-            body:
-              application/json:
-                type: creditLibrary.creditReport
-                example: !include examples/credit-report-example.json
-                  
+uses:
+  creditLibrary: exchange_modules/b9f6e13a-e015-4c1b-8632-deaf6a0c00f2/customer-credit-library/1.0.1/customer-credit-library.raml
+  loanLibrary: exchange_modules/b9f6e13a-e015-4c1b-8632-deaf6a0c00f2/customer-loan-library/1.0.0/customer-loan-library.raml
+traits:
+  error: !include exchange_modules/b9f6e13a-e015-4c1b-8632-deaf6a0c00f2/credit-common-system/1.0.0/traits/error-trait.raml
+  correlationId: !include exchange_modules/b9f6e13a-e015-4c1b-8632-deaf6a0c00f2/credit-common-system/1.0.0/traits/correlatable-trait.raml
+  
+/loan:
+  post:
+    is: [error,correlationId]
+    description: Apply Loan 
+    body:
+      application/json:
+        type: !include dataTypes/loan-request-dataType.raml
+        example: !include examples/loan-request-example.json
+    responses:
+      200:
+        body:
+          application/json:
+            example: !include examples/loan-response-example.json

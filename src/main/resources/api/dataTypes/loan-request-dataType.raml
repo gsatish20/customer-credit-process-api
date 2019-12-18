@@ -1,0 +1,12 @@
+#%RAML 1.0 DataType
+uses:
+  loanLibrary: ..//exchange_modules/b9f6e13a-e015-4c1b-8632-deaf6a0c00f2/customer-loan-library/1.0.0/customer-loan-library.raml
+
+type: object
+properties:
+  customer:
+    type: loanLibrary.customer
+  loanDetails:
+    type: loanLibrary.loan
+  
+      

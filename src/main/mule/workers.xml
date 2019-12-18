@@ -6,31 +6,34 @@
 http://www.mulesoft.org/schema/mule/http http://www.mulesoft.org/schema/mule/http/current/mule-http.xsd
 http://www.mulesoft.org/schema/mule/ee/core http://www.mulesoft.org/schema/mule/ee/core/current/mule-ee.xsd">
 
-	<sub-flow name="wf_getCustomerCreditScore" doc:id="983f8c35-9616-4ce5-a920-3465aa9c44f4" >
-		<http:request method="GET" doc:name="Request to Credit System API to Fetch Credit Score" doc:id="04d0e1c7-f104-4750-b65a-65df0b409db1" config-ref="HTTP_Request_configuration_for_Credit_System_API" path="${destination.creditScore.path}/{ssn}">
+	<sub-flow name="wf_getCustomerCreditScore" doc:id="e8a9ab02-386d-438a-b0c6-cb698609530e" >
+		<logger level="INFO" doc:name="Logger" doc:id="5b9b70be-a5bd-4bde-98c0-908e5249e70c" message='"Process started for fetching the credit score for customer"' category="com.credit.api"/>
+		<http:request method="GET" doc:name="Request to Credit System API to Fetch Credit Score" doc:id="c6101aba-31f4-4d55-98bb-afca83ec0121" config-ref="HTTP_Request_configuration_for_Credit_System_API" path="${destination.creditScore.path}/{ssn}">
 			<http:uri-params ><![CDATA[#[output application/java
 ---
 {
 	"ssn" : vars.ssn
 }]]]></http:uri-params>
 		</http:request>
-		<choice doc:name="credit report exists ?" doc:id="fa9ad4c1-366c-4140-946d-ab783fc29e14" >
+		<choice doc:name="credit report exists ?" doc:id="2cc322a2-a233-4d8a-bd02-e68931e6fde3" >
 			<when expression="#[not isEmpty(payload)]" >
-				<ee:transform doc:name="set decision" doc:id="e27be314-0fc2-405e-8564-69ba06da5763" >
+				<ee:transform doc:name="set decision" doc:id="43ac9daf-ef0e-43c3-823c-4e90bbf66af2" >
 					<ee:message >
 					</ee:message>
 					<ee:variables >
 						<ee:set-variable resource="transformations\getCustomerLoanApprovalDecision.dwl" variableName="decision" />
-					</ee:variables>
+					
+</ee:variables>
 				</ee:transform>
-				<ee:transform doc:name="set json response" doc:id="c11dd7e4-22a0-4ebc-8f07-1fec7b05c109" >
+				<ee:transform doc:name="set json response" doc:id="2ceacb12-bdbc-4660-9fce-86e1b174b23e" >
 					<ee:message >
 						<ee:set-payload resource="transformations\setSuccessResponse.dwl" />
-					</ee:message>
+					
+</ee:message>
 				</ee:transform>
 			</when>
 			<otherwise >
-				<ee:transform doc:name="set error response" doc:id="71a81ab0-0f6b-4e34-ac3b-6ede0f5e0f0c" >
+				<ee:transform doc:name="set error response" doc:id="a709e423-be74-42fd-93cb-691e6027ce47" >
 					<ee:message >
 						<ee:set-payload ><![CDATA[%dw 2.0
 output application/json
