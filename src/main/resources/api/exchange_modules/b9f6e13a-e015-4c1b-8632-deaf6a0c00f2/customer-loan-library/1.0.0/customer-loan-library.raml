@@ -1,0 +1,52 @@
+#%RAML 1.0 Library
+uses:
+  customer-credit-library: exchange_modules/b9f6e13a-e015-4c1b-8632-deaf6a0c00f2/customer-credit-library/1.0.1/customer-credit-library.raml
+
+types:
+  loan:
+    type: object
+    properties:
+      amountRequested: 
+        type: number
+        description: Amount Requested
+        example: 150000
+      currency:
+        type: string
+        example: USD
+      apr:
+        type: number
+        description: APR
+        example: 3.8
+      dateApplied:
+        type: datetime
+        description: date time applied
+      source:
+        type: string
+        description: source appliled from
+        example: website
+  customer:
+    type: customer-credit-library.name
+    properties:
+      ssn: 
+        type: string
+        minLength: 9
+        maxLength: 9
+      address:
+        type: object
+        properties:
+          addressLine1:
+            type: string
+            description: street address
+          addressLine2:
+            type: string
+            description: street address
+          aptNo?:
+            type: string
+          state:
+            enum: [ "AL", "AK", "AS", "AZ", "AR","CA", "CO", "CT", "DE", "DC", "FM", "FL", "GA", "GU", "HI", "ID", "IL", "IN", "IA", "KS", "KY", "LA", "ME", "MD", "MH", "MA", "MI", "MN", "MS", "MO", "MT", "NE","NV", "NH", "NJ", "NM", "NY", "NC", "ND", "MP", "OH", "OK", "OR", "PW", "PA", "PR", "RI", "SC", "SD", "TN", "TX", "UT", "VT", "VI", "VA", "WA", "WV", "WI", "WY"]
+            example: "TX"
+          country:
+            type: string
+            description: country
+            example: US
+            

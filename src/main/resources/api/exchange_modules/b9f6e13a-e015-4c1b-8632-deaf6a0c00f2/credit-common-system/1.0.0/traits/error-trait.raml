@@ -1,0 +1,45 @@
+#%RAML 1.0 Trait
+description: Responses used to handle common errors.
+
+responses: 
+  400:    
+    description: Bad Request    
+    body: 
+      application/json:
+        type: object
+  
+  404:
+    description: Not Found
+    body: 
+      application/json:
+        type: object
+  
+  405:
+    description: Method Not Allowed
+    body: 
+      application/json:
+        type: object
+  
+  406:
+    description: Not Acceptable
+    body: 
+      application/json:
+        type: object
+  
+  415:
+    description: Unsupported Media Type
+    body: 
+      application/json:
+        type: object
+  
+  500:
+    description: Internal Server Error
+    body: 
+      application/json:
+        type: object
+  
+  501:
+    description: Not Implemented
+    body: 
+      application/json:
+        type: object
